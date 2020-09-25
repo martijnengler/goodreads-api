@@ -11,6 +11,8 @@
  * - reviews.list (getShelf|getLatestRead|getAllBooks)
  * - review.show (getReview)
  * - user.show (getUser|getUserByUsername)
+ * - user.status (getUserStatus)
+ * - user.statuses (getUserStatuses)
  *
  * @author danielgwood <github.com/danielgwood>
  */
@@ -421,5 +423,41 @@ class GoodReads
         } else {
             throw new Exception('Cache directory not writable.');
         }
+    }
+
+    /**
+     * Get status for a given user.
+     *
+     * @param  integer $userId
+     * @return array
+     * 
+     * @see https://www.goodreads.com/user_status/show/ID?format=xml&key=KEY
+     */
+    public function getUserStatus($userId)
+    {
+        return $this->request(
+            'user_status/show',
+            array(
+                'key' => $this->apiKey,
+                'id' => (int)$userId
+            )
+        );
+    }
+    /**
+     * Get statuses index.
+     *
+     * @param  integer $userId
+     * @return array
+     * 
+     */
+    public function getUserStatuses($userId)
+    {
+        return $this->request(
+            'user_status/index',
+            array(
+                'key' => $this->apiKey,
+                'id' => (int)$userId
+            )
+        );
     }
 }
