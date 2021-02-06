@@ -394,7 +394,7 @@ class GoodReads
      * @param array  $contents
      * @return boolean
      */
-    private function addCache($endpoint, array $params = array(), array $contents)
+    private function addCache($endpoint, array $params = array(), array $contents = [])
     {
         if (file_exists($this->cacheDir) && is_writable($this->cacheDir)) {
             $filename = str_replace('/', '_', $endpoint) . '-' . md5(serialize($params));
