@@ -411,6 +411,12 @@ class GoodReads
      */
     private function clearExpiredCache()
     {
+			// just try to create the cache if it does not exist yet
+			if(!file_exists($this->cacheDir))
+			{
+				mkdir($this->cacheDir);
+			}
+
         if (file_exists($this->cacheDir) && is_writable($this->cacheDir)) {
             foreach (new DirectoryIterator($this->cacheDir) as $file) {
                 if ($file->isDot()) {
@@ -420,7 +426,7 @@ class GoodReads
                     unlink($file->getRealPath());
                 }
             }
-        } else {
+				} else {
             throw new Exception('Cache directory not writable.');
         }
     }
@@ -430,7 +436,7 @@ class GoodReads
      *
      * @param  integer $userId
      * @return array
-     * 
+     *
      * @see https://www.goodreads.com/user_status/show/ID?format=xml&key=KEY
      */
     public function getUserStatus($userId)
@@ -448,7 +454,7 @@ class GoodReads
      *
      * @param  integer $userId
      * @return array
-     * 
+     *
      */
     public function getUserStatuses($userId)
     {
